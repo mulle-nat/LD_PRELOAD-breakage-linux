@@ -41,3 +41,9 @@ load_preload
 
 LD_PRELOAD's constructor is certainly run *AFTER* all others.
 
+
+## Addendum
+
+Looking at it with `ldd` (See: [Issue #1](//github.com/mulle-nat/LD_PRELOAD-breakage-linux/issues/1)) one can see that `load_preload` is actually loaded ahead of `linked`, which is fine. According to the ELF spec, the initialization order
+of non-related shared objects is non-defined (maybe to support parallel loading). So this could be technically OK on
+the ELF side. But I still think, this violates `LD_PRELOAD`s purpose.
